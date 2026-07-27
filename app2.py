@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
+import pytz # <-- NOVA BIBLIOTECA ADICIONADA AQUI
 
 # 1. Configuração da página
 st.set_page_config(page_title="Metro Mondego Horários", layout="centered")
@@ -9,7 +10,6 @@ st.title("🚇 Horários Metro Mondego")
 # 2. Carregar a Base de Dados
 @st.cache_data
 def carregar_dados():
-    # Garante que o ficheiro CSV está na mesma pasta que este script
     return pd.read_csv("horarios.csv")
 
 df = carregar_dados()
@@ -29,7 +29,10 @@ with col2:
 with col3:
     st.write("Hora de Partida")
     col_h, col_m = st.columns(2)
-    hora_atual = datetime.now()
+    
+    # FORÇAR O FUSO HORÁRIO DE PORTUGAL AQUI:
+    fuso_portugal = pytz.timezone('Europe/Lisbon')
+    hora_atual = datetime.now(fuso_portugal)
     
     with col_h:
         # Dropdown para as horas (00 a 23)
@@ -48,8 +51,8 @@ with col3:
 if origem == destino:
     st.warning("A estação de saída e chegada não podem ser a mesma.")
 else:
-    # Definir o dia da semana atual
-    dia_semana = datetime.now().weekday()
+    # Definir o dia da semana atual no fuso de Portugal
+    dia_semana = hora_atual.weekday()
     if dia_semana == 5:
         tipo_dia = "Sábados"
     elif dia_semana == 6:
