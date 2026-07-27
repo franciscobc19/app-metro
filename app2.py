@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
-import pytz # <-- NOVA BIBLIOTECA ADICIONADA AQUI
+import pytz 
 
 # 1. Configuração da página
 st.set_page_config(page_title="Metro Mondego Horários", layout="centered")
