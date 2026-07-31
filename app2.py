@@ -10,7 +10,7 @@ st.title("🚇 Horários Metro Mondego")
 # 2. Carregar a Base de Dados
 @st.cache_data
 def carregar_dados():
-    return pd.read_csv("horarios.csv")
+    return pd.read_csv("horarios1.csv")
 
 df = carregar_dados()
 
